@@ -32,6 +32,9 @@ final class GildedRose
         }
     }
 
+    /**
+     * @return Item[]
+     */
     public function getItems()
     {
         return $this->items;
@@ -39,14 +42,12 @@ final class GildedRose
 
     private function updateAgedBrie($item)
     {
-        if ($item->quality < 50) {
-            $this->increaseQuality($item);
-        }
+        $item->increaseQuality();
 
-        $item->sell_in = $item->sell_in - 1;
+        $item->decreaseSellIn();
 
-        if ($item->sell_in < 0 && $item->quality < 50) {
-            $this->increaseQuality($item);
+        if ($item->sell_in < 0) {
+            $item->increaseQuality();
         }
     }
 
@@ -56,43 +57,30 @@ final class GildedRose
 
     private function updateBackstage($item)
     {
-        if ($item->quality < 50) {
-            $this->increaseQuality($item);
-            if ($item->sell_in < 11 && $item->quality < 50) {
-                $this->increaseQuality($item);
-            }
-            if ($item->sell_in < 6 && $item->quality < 50) {
-                $this->increaseQuality($item);
-            }
+        $item->increaseQuality();
+
+        if ($item->sell_in < 11) {
+            $item->increaseQuality();
+        }
+        if ($item->sell_in < 6) {
+            $item->increaseQuality();
         }
 
-        $item->sell_in = $item->sell_in - 1;
+        $item->decreaseSellIn();
 
         if ($item->sell_in < 0) {
-            $item->quality = $item->quality - $item->quality;
+            $item->noQuality();
         }
     }
 
     private function update($item)
     {
-        if ($item->quality > 0) {
-            $this->decreaseQuality($item);
+        $item->decreaseQuality();
+
+        $item->decreaseSellIn();
+
+        if ($item->sell_in < 0) {
+            $item->decreaseQuality();
         }
-
-        $item->sell_in = $item->sell_in - 1;
-
-        if ($item->sell_in < 0 && $item->quality > 0) {
-            $this->decreaseQuality($item);
-        }
-    }
-
-    private function increaseQuality($item)
-    {
-        $item->quality = $item->quality + 1;
-    }
-
-    private function decreaseQuality($item)
-    {
-        $item->quality = $item->quality - 1;
     }
 }
