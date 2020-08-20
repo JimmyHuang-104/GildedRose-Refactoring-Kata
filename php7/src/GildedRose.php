@@ -4,7 +4,6 @@ namespace App;
 
 final class GildedRose
 {
-
     private $items = [];
 
     public function __construct($items)
@@ -16,7 +15,7 @@ final class GildedRose
     {
         $items = $this->getItems();
         foreach ($items as $item) {
-            switch ($item->name) {
+            switch ($item->getName()) {
                 case 'Aged Brie':
                     $this->updateAgedBrie($item);
                     break;
@@ -35,51 +34,51 @@ final class GildedRose
     /**
      * @return Item[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items;
     }
 
-    private function updateAgedBrie($item)
+    private function updateAgedBrie(Item $item)
     {
         $item->increaseQuality();
 
         $item->decreaseSellIn();
 
-        if ($item->sell_in < 0) {
+        if ($item->getSellIn() < 0) {
             $item->increaseQuality();
         }
     }
 
-    private function updateSulfuras($item)
+    private function updateSulfuras(Item $item)
     {
     }
 
-    private function updateBackstage($item)
+    private function updateBackstage(Item $item)
     {
         $item->increaseQuality();
 
-        if ($item->sell_in < 11) {
+        if ($item->getSellIn() < 11) {
             $item->increaseQuality();
         }
-        if ($item->sell_in < 6) {
+        if ($item->getSellIn() < 6) {
             $item->increaseQuality();
         }
 
         $item->decreaseSellIn();
 
-        if ($item->sell_in < 0) {
-            $item->noQuality();
+        if ($item->getSellIn() < 0) {
+            $item->setQuality(0);
         }
     }
 
-    private function update($item)
+    private function update(Item $item)
     {
         $item->decreaseQuality();
 
         $item->decreaseSellIn();
 
-        if ($item->sell_in < 0) {
+        if ($item->getSellIn() < 0) {
             $item->decreaseQuality();
         }
     }
