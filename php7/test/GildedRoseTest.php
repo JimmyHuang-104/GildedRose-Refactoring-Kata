@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Item\ItemFactory;
+
 class GildedRoseTest extends \PHPUnit\Framework\TestCase
 {
     public function testFoo()
     {
-        $item = new Item("foo", 0, 0);
+        $item = ItemFactory::create("foo", 0, 0);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -17,7 +19,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testQualityNeverIsNegative()
     {
-        $item = new Item("foo", 0, 0);
+        $item = ItemFactory::create("foo", 0, 0);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -27,7 +29,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testSulfurasCouldNotBeSold()
     {
-        $item = new Item("Sulfuras, Hand of Ragnaros", 10, 0);
+        $item = ItemFactory::create("Sulfuras, Hand of Ragnaros", 10, 0);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -37,7 +39,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testSulfurasCouldNotDecreaseQuality()
     {
-        $item = new Item("Sulfuras, Hand of Ragnaros", 10, 10);
+        $item = ItemFactory::create("Sulfuras, Hand of Ragnaros", 10, 10);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -47,7 +49,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testQualityCouldNotBeMoreThanFifty()
     {
-        $item = new Item("Aged Brie", 10, 50);
+        $item = ItemFactory::create("Aged Brie", 10, 50);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -57,7 +59,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testItemWithDatePassedQualityDecreaseByTwice()
     {
-        $item = new Item("foo", -1, 40);
+        $item = ItemFactory::create("foo", -1, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -67,7 +69,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testAgedBrieIncreaseQualityWhenItGetsOlder()
     {
-        $item = new Item("Aged Brie", 1, 40);
+        $item = ItemFactory::create("Aged Brie", 1, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -77,7 +79,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testAgedBrieIncreaseByTwoQualityWhenDatePassed()
     {
-        $item = new Item("Aged Brie", -1, 40);
+        $item = ItemFactory::create("Aged Brie", -1, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -87,7 +89,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testAgedBrieIncreaseByTwoQualityWhenDatePassedAndNotMoreThanFifty()
     {
-        $item = new Item("Aged Brie", -1, 50);
+        $item = ItemFactory::create("Aged Brie", -1, 50);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -97,7 +99,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesIncreaseQualityByTwoWhenSellinLessThanTen()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 40);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 10, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -107,7 +109,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesIncreaseQualityByTwoWhenSellinLessThanSix()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 6, 40);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 6, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -117,7 +119,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesIncreaseQualityByThreeWhenSellinLessThanFive()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 40);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 5, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -127,7 +129,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesIncreaseQualityByTwoWhenSellinLessThanSixAndNotMoreThanFifty()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 6, 49);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 6, 49);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -137,7 +139,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesIncreaseQualityByThreeWhenSellinLessThanFiveAndNotMoreThanFifty()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 48);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 5, 48);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -147,7 +149,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesQualityDropsToZeroAfterConcert()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 40);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 0, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();
@@ -157,7 +159,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
     public function testBackstagePassesQualityIncreaseQuilityByOneQhenDateIsMoreThan10()
     {
-        $item = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 40);
+        $item = ItemFactory::create("Backstage passes to a TAFKAL80ETC concert", 11, 40);
         $gildedRose = new GildedRose([$item]);
 
         $gildedRose->updateQuality();

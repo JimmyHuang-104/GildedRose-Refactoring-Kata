@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Item;
 
-final class Item
+abstract class Item
 {
     private $name;
     private $sell_in;
@@ -58,4 +58,6 @@ final class Item
     {
         $this->sell_in = $this->sell_in - 1;
     }
+
+    abstract function update();
 }
